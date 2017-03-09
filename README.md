@@ -24,6 +24,7 @@ ORMLite documentation examples: http://ormlite.com/android/examples/
    1) Add the following dependency on your build.gradle(app) file:
    ```groovy
    compile 'com.squareup.retrofit2:retrofit:2.2.0'
+   compile 'com.squareup.retrofit2:converter-gson:2.1.0'
    ```
    
    2) Create an interface called _TeamsService_ that has a get method to retrieve the teams
