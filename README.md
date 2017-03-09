@@ -33,7 +33,7 @@ ORMLite documentation examples: http://ormlite.com/android/examples/
       interface TeamsService
       {
       
-          @POST( "teams.json" )
+          @GET( "teams.json" )
           Call<List<Team>> getTeamsList( );
       
       }
