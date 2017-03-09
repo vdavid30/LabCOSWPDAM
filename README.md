@@ -76,12 +76,12 @@ ORMLite documentation examples: http://ormlite.com/android/examples/
 5) Add a method called _getTeams_ to the _RetrofitNetwork_ class  to retrieve the Teams list.
                
   ```java
-       public void getTeams( RequestCallback<List<Teams>> requestCallback )
+       public void getTeams( RequestCallback<List<Team>> requestCallback )
          {             
              try
              {
-                Call<List<Teams>> call = teamsService.getTeamsList( );
-                 Response<List<Teams>> execute = call.execute();
+                Call<List<Team>> call = teamsService.getTeamsList( );
+                 Response<List<Team>> execute = call.execute();
                  requestCallback.onSuccess( execute.body() );
              }
              catch ( IOException e )
