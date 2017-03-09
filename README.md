@@ -146,12 +146,10 @@ ORMLite documentation examples: http://ormlite.com/android/examples/
   
   
   2) Include the cardLayout and RecyclerView dependencies on your gradle file.
-       ```groovy
-           dependencies {
-                        compile 'com.android.support:cardview-v7:21.0.+'
-                        compile 'com.android.support:recyclerview-v7:21.0.+'
-                    }
-        ```
+   ```groovy
+    compile 'com.android.support:cardview-v7:21.0.+'
+    compile 'com.android.support:recyclerview-v7:21.0.+'
+ ```
   
   3) Create an xml file that will represent the row of a team and make sure that these values are mapped on the ViewHolder class created on the step 1.
   
