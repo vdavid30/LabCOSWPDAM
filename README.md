@@ -93,13 +93,56 @@ ORMLite documentation examples: http://ormlite.com/android/examples/
   
   6) Verify that the method works as expected and that the teams are retrieved correctly (you can try using the debugger)
   
-  7) Persist the teams objects into the database, then restart your application and make sure that teams are store correctly.
+  7) Open Android Monitor and look at the exceptions that are shown. As you notice the request does not work for two reasons: You don't have an Internet permission and you are running the network request on the main thread.
+  
+  8) Add a Internet permission to the AndroidManifest file:
+   ```xml
+   <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+             package="com.gdg.myfirstapp">
+   
+     <uses-permission android:name="android.permission.INTERNET" />
+   
+     <application
+         android:allowBackup="true"
+         android:name=".MyApplication"
+         android:icon="@drawable/ic_launcher"
+         android:label="@string/app_name"
+         android:theme="@style/AppTheme">
+
+   ```
+          
+  
+  9) Create an instance of the ExecutorService class, then call the method submit and inside the run method of the Runnable class add the code that does the network request:
+  
+   ```java
+  ExecutorService executorService = Executors.newFixedThreadPool( 1 );
+  
+  executorService.execute( new Runnable()
+  {
+      @Override
+      public void run()
+      {
+          try
+          {
+              //Network request code goes here
+          }
+          catch ( IOException e )
+          {
+              e.printStackTrace();
+          }
+      }
+  } );
+```
+  
+  7) Persist the teams objects into the database, then restart your application and make sure that teams are stored correctly.
   
   
-  **Part 3: Display the teams using a RecyclerView.Adapter**
+  **Part 3: Display the teams list using a RecyclerView.Adapter**
   
+  Reference: https://developer.android.com/training/material/lists-cards.html
   
-  1) Create a class that extends the _RecyclerView.Adapter_. Inside this class create a _ViewHolder_ inner class with the corresponding element views that will represent a team (name, short name and image).
+  1) Create a new package called ui.adapter and then create a class that extends the _RecyclerView.Adapter_ called _TeamsAdapter_. Inside this class create a _ViewHolder_ inner class with the corresponding element views that will represent a team (name, short name and image).
+  
   
   2) Include the cardLayout and RecyclerView dependencies on your gradle file.
        ```groovy
@@ -109,7 +152,7 @@ ORMLite documentation examples: http://ormlite.com/android/examples/
                     }
         ```
   
-  3) Create an xml file that will represent the row of a team and make sure that this values are mapped on the ViewHolder class.
+  3) Create an xml file that will represent the row of a team and make sure that these values are mapped on the ViewHolder class created on the step 1.
   
 
        <?xml version="1.0" encoding="utf-8"?>
@@ -173,3 +216,66 @@ ORMLite documentation examples: http://ormlite.com/android/examples/
            </LinearLayout>
          </android.support.v7.widget.CardView>
        </LinearLayout>
+
+
+
+4) Modify the main_activity.xml file with the following code to have the recyclerview element:
+
+ ```xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              android:paddingTop="@dimen/activity_vertical_margin"
+              android:paddingBottom="@dimen/activity_vertical_margin"
+              tools:context=".MainActivity"
+              android:orientation="vertical">
+              
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/recyclerView"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:scrollbars="vertical" />
+          
+
+</LinearLayout>
+```
+
+5) Create a variable for the RecyclerView in the MainActivity class and bind it to the RecyclerView using the method _findViewById(R.id.recyclerView)_
+
+6) Add the following method to your activity and call it right after the _setContentView_ method as follows:
+ 
+ ```java
+ 
+  @Override
+     protected void onCreate( Bundle savedInstanceState )
+     {
+         super.onCreate( savedInstanceState );
+         setContentView( R.layout.activity_main );
+         configureRecyclerView();
+     }
+
+
+     private void configureRecyclerView()
+         {
+             recyclerView = (RecyclerView) findViewById( R.id.recyclerView );
+             recyclerView.setHasFixedSize( true );
+             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager( this );
+             recyclerView.setLayoutManager( layoutManager );
+         }
+```
+
+
+7) Finally create a TeamsAdapter instance and call the following method of the recyclerView:
+
+ ```java
+ 
+recyclerView.setAdapter( new TeamsAdapter( teams ) );
+
+```
+
+8) Run your application and if you got everything correct you should be able to see the teams list.
+
