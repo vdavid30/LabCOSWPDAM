@@ -13,7 +13,7 @@ import co.edu.pdam.eci.persistenceapiintegration.data.entity.Team;
  * @author Santiago Carrillo
  */
 @Dao
-public interface TeamDao extends BaseDao<Team, Long> {
+public interface TeamDao {
     @Query("SELECT * FROM teams")
     List<Team> getAll();
 

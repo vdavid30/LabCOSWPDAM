@@ -10,7 +10,7 @@ import android.arch.persistence.room.PrimaryKey;
 
 //TODO add database annotations and proper model structure
 @Entity
-public class Team extends BaseEntity {
+public class Team{
 
     @PrimaryKey
     private Long id;
@@ -29,7 +29,6 @@ public class Team extends BaseEntity {
         return shortName;
     }
 
-    @Override
     public Long getId() {
         return id;
     }
