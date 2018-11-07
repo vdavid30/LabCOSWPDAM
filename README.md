@@ -1,7 +1,14 @@
 # Android Persistance API Integration
 Android Local Storage and integration with a web API.
 
-**Part 1: Local storage using ORMLite**
+**Part 1: Local storage using ROOM**
+
+Read the following tutorial and make the changes on your project so it works with ROOM:
+
+https://developer.android.com/training/data-storage/room/
+
+
+If you want to work with ORMLite (Other library) follow these instructions:
 
 1) Download the project code, import it into Android Studio and make sure it compiles correctly.
 
@@ -20,24 +27,28 @@ ORMLite documentation examples: http://ormlite.com/android/examples/
    
    
    **Part 2: retrieving data from the API using Retrofit**
-   
-   1) Add the following dependency on your build.gradle(app) file:
-   ```groovy
-   compile 'com.squareup.retrofit2:retrofit:2.2.0'
-   compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-   ```
-   
-   2) Create an interface called _TeamsService_ that has a get method to retrieve the teams
-   
-  ```java
-      interface TeamsService
-      {
-      
-          @GET( "teams.json" )
-          Call<List<Team>> getTeamsList( );
-      
-      }
-  ```
+ 
+ Go to the retrofit library website and understand how to use the library:
+  
+ https://square.github.io/retrofit/
+ 
+ 1) Add the following dependency on your build.gradle(app) file:
+ ```groovy
+ implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+ implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+ ```
+
+ 2) Create an interface called _TeamsService_ that has a get method to retrieve the teams
+
+```java
+    interface TeamsService
+    {
+
+        @GET( "teams.json" )
+        Call<List<Team>> getTeamsList( );
+
+    }
+```
       
 3) Create a class called RetrofitNetwork inside a package called network that contains the following code:
  
